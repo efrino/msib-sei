@@ -37,6 +37,7 @@ public class ProyekService {
         proyek.setTglSelesai(proyekDetails.getTglSelesai());
         proyek.setPimpinanProyek(proyekDetails.getPimpinanProyek());
         proyek.setKeterangan(proyekDetails.getKeterangan());
+        proyek.setLokasiSet(proyekDetails.getLokasiSet());
 
         return proyekRepository.save(proyek);
     }

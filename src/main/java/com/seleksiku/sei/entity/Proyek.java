@@ -3,12 +3,15 @@ package com.seleksiku.sei.entity;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,8 +40,15 @@ public class Proyek {
     @Column(name = "keterangan")
     private String keterangan;
 
-    @OneToMany(mappedBy = "proyek")
-    private Set<ProyekLokasi> proyekLokasi;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "proyek_lokasi",
+        joinColumns = @JoinColumn(name = "proyek_id"),
+        inverseJoinColumns = @JoinColumn(name = "lokasi_id")
+    )
+    private Set<Lokasi> lokasiSet;
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -96,11 +106,11 @@ public class Proyek {
         this.keterangan = keterangan;
     }
 
-    public Set<ProyekLokasi> getProyekLokasi() {
-        return proyekLokasi;
+    public Set<Lokasi> getLokasiSet() {
+        return lokasiSet;
     }
 
-    public void setProyekLokasi(Set<ProyekLokasi> proyekLokasi) {
-        this.proyekLokasi = proyekLokasi;
+    public void setLokasiSet(Set<Lokasi> lokasiSet) {
+        this.lokasiSet = lokasiSet;
     }
 }

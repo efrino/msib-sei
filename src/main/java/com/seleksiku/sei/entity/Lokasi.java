@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,8 +30,10 @@ public class Lokasi {
     @Column(name = "kota")
     private String kota;
 
-    @OneToMany(mappedBy = "lokasi")
-    private Set<ProyekLokasi> proyekLokasi;
+    @ManyToMany(mappedBy = "lokasiSet")
+    private Set<Proyek> proyekSet;
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -73,11 +75,11 @@ public class Lokasi {
         this.kota = kota;
     }
 
-    public Set<ProyekLokasi> getProyekLokasi() {
-        return proyekLokasi;
+    public Set<Proyek> getProyekSet() {
+        return proyekSet;
     }
 
-    public void setProyekLokasi(Set<ProyekLokasi> proyekLokasi) {
-        this.proyekLokasi = proyekLokasi;
+    public void setProyekSet(Set<Proyek> proyekSet) {
+        this.proyekSet = proyekSet;
     }
 }

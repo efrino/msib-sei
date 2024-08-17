@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seleksiku.sei.entity.Lokasi;
+import com.seleksiku.sei.entity.Proyek;
 import com.seleksiku.sei.exception.ResourceNotFoundException;
 import com.seleksiku.sei.repository.LokasiRepository;
 
@@ -41,6 +42,15 @@ public class LokasiService {
 
     public void deleteLokasi(Long lokasiId) {
         Lokasi lokasi = getLokasiById(lokasiId);
+
+        // Check if the location is associated with any projects
+        if (!lokasi.getProyekSet().isEmpty()) {
+            // Optionally: throw an exception or remove the location from each associated project
+            for (Proyek proyek : lokasi.getProyekSet()) {
+                proyek.getLokasiSet().remove(lokasi);
+            }
+        }
+
         lokasiRepository.delete(lokasi);
     }
 }
